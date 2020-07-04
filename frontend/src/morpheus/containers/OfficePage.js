@@ -14,6 +14,7 @@ import { emitEnterInRoom, emitStartMeeting, emitLeftMeeting} from "../socket";
 import { setCurrentRoom } from "../store/actions";
 import { CurrentRoomPropType } from "../store/models";
 
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3)
@@ -81,6 +82,9 @@ const OfficePage = ({
                   history.push(redirectUrl);
                 }
               }
+            }}
+            onEnterAvatar = {(user) => {
+              window.open("https://hangouts.google.com/chat/person/"+ user.id);
             }}
           />
         ))}

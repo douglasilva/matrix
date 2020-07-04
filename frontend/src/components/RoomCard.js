@@ -49,7 +49,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const RoomCard = ({ name, users, meetingEnabled, onEnterRoom, onEnterMeeting }) => {
+const RoomCard = ({ name, users, meetingEnabled, onEnterRoom, onEnterMeeting, onEnterAvatar }) => {
   const [isExpanded, toggleExpand] = useState(false);
   const classes = useStyles();
   const userToShow = isExpanded ? users : users.slice(0, 3);
@@ -57,44 +57,32 @@ const RoomCard = ({ name, users, meetingEnabled, onEnterRoom, onEnterMeeting }) 
 
   return (
     <Card className={classes.root}>
-      <CardActionArea
-        className={classes.contentAction}
-        onClick={() => {
-          toggleExpand(!isExpanded);
-        }}
-      >
         <CardContent className={classes.content}>
           <Typography gutterBottom variant="h5" component="h2">
             {name}
           </Typography>
           <div className={classes.userGrid}>
-            {userToShow.map(user => (
+            {users.map(user => (
               <Tooltip key={user.id} title={user.name}>
                 <div
                   className={clsx({
                     [classes.avatarInMeeting]: user.inMeet
                   })}
                 >
-                  <Avatar src={decodeURIComponent(user.imageUrl)} />
+                  <Avatar src={decodeURIComponent(user.imageUrl)} onClick={() => onEnterAvatar(user)}/>
                 </div>
               </Tooltip>
             ))}
-            {totalUsersHidden > 0 && (
-              <Tooltip title={`more ${totalUsersHidden} users`}>
-                <Avatar>{`+${totalUsersHidden}`}</Avatar>
-              </Tooltip>
-            )}
             {users.length === 0 && <div className={classes.emptyUserSpace} />}
           </div>
         </CardContent>
-      </CardActionArea>
       <CardActions>
         <Button size="small" color="primary" onClick={onEnterRoom}>
-          Enter room
+          Entrar
         </Button>
         {meetingEnabled && (
           <Button size="small" color="primary" onClick={onEnterMeeting}>
-            Enter meeting
+            Entrar reunião
           </Button>
         )}
       </CardActions>
