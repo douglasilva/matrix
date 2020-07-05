@@ -49,7 +49,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const RoomCard = ({ name, users, meetingEnabled, onEnterRoom, onEnterMeeting, onEnterAvatar }) => {
+const RoomCard = ({ name, users, meetingEnabled, dashboardUrl, onEnterRoom, onEnterMeeting, onEnterAvatar, onEnterDashboard }) => {
   const [isExpanded, toggleExpand] = useState(false);
   const classes = useStyles();
   const userToShow = isExpanded ? users : users.slice(0, 3);
@@ -78,12 +78,17 @@ const RoomCard = ({ name, users, meetingEnabled, onEnterRoom, onEnterMeeting, on
         </CardContent>
       <CardActions>
         <Button size="small" color="primary" onClick={onEnterRoom}>
-          Entrar
+          Sala
         </Button>
         {meetingEnabled && (
           <Button size="small" color="primary" onClick={onEnterMeeting}>
-            Entrar reunião
+            Reunião
           </Button>
+        )}
+        {dashboardUrl && (
+        <Button size="small" color="primary" onClick={onEnterDashboard}>
+          Dashboard
+        </Button>
         )}
       </CardActions>
     </Card>
