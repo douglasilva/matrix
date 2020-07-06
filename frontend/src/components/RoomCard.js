@@ -63,7 +63,7 @@ const RoomCard = ({ name, users, meetingEnabled, dashboardUrl, onEnterRoom, onEn
           </Typography>
           <div className={classes.userGrid}>
             {users.map(user => (
-              <Tooltip key={user.id} title={user.name}>
+              <Tooltip key={user.id} title={user.name} className={classes.contentAction}>
                 <div
                   className={clsx({
                     [classes.avatarInMeeting]: user.inMeet
