@@ -84,7 +84,7 @@ const OfficePage = ({
               }
             }}
             onEnterAvatar = {(user) => {
-              window.open("https://chat.google.com/u/1/dm/pi="+ user.id);
+              window.open("https://hangouts.google.com/chat/person/"+ user.id);
             }}
             onEnterDashboard = {() => {
               if(room.dashboardUrl){
