@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Grid from "../../components/Grid";
 import RoomCard from "../../components/RoomCard";
+import RoomGroup from "../../components/RoomGroup";
+
 import {
   selectOffice,
   selectCurrentRoom,
@@ -17,7 +18,8 @@ import { CurrentRoomPropType } from "../store/models";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
+    flexGrow: 1
   }
 }));
 
@@ -42,58 +44,71 @@ const OfficePage = ({
     }
   }, [match.params.roomId]);
 
+  const roomGroups = office.reduce((rv, room) => {
+    const group = room.group || "ungrouped";
+    // eslint-disable-next-line no-param-reassign
+    if (!rv[group]) rv[group] = [];
+    rv[group].push(room);
+    return rv;
+  }, { "ungrouped": [] });
+
   return (
-    <div className={classes.root}>
-      <Grid>
-        {office.map(room => (
-          <RoomCard
-            {...room}
-            key={room.id}
-            onEnterRoom={() => {
-              emitEnterInRoom(room.id);
-              onSetCurrentRoom(room);
-              history.replace(`/morpheus/office/${room.id}`);
-            }}
-            onEnterMeeting={(event) => {
-              emitEnterInRoom(room.id);
-              onSetCurrentRoom(room);
-
-              if(room.externalMeetUrl){
-                emitStartMeeting();   
-                const externalMeetRoom = window.open(room.externalMeetUrl);
-
-                const externalMeetRoomMonitoring = () => {
-                  window.setTimeout(() => {
-                    if (externalMeetRoom.closed) {
-                      emitLeftMeeting();
-                    }else{
-                      externalMeetRoomMonitoring();
-                    } 
-                  }, 1000);
+    <div className={classes.root}>      
+      {( Object.keys(roomGroups).map(group => (
+        <RoomGroup
+          key={group}
+          name={group}
+        >
+          {roomGroups[group].map((room) => (
+            <RoomCard
+              {...room}
+              key={room.id}
+              onEnterRoom={() => {
+                emitEnterInRoom(room.id);
+                onSetCurrentRoom(room);
+                history.replace(`/morpheus/office/${room.id}`);
+              }}
+              onEnterMeeting={(event) => {
+                emitEnterInRoom(room.id);
+                onSetCurrentRoom(room);
+  
+                if(room.externalMeetUrl){
+                  emitStartMeeting();   
+                  const externalMeetRoom = window.open(room.externalMeetUrl);
+  
+                  const externalMeetRoomMonitoring = () => {
+                    window.setTimeout(() => {
+                      if (externalMeetRoom.closed) {
+                        emitLeftMeeting();
+                      }else{
+                        externalMeetRoomMonitoring();
+                      } 
+                    }, 1000);
+                  }
+  
+                  externalMeetRoomMonitoring();
+  
+                }else{
+                  const redirectUrl = `/morpheus/room/${room.id}`;
+                  if (event.ctrlKey) {
+                    window.open(redirectUrl, "_blank");
+                  } else {
+                    history.push(redirectUrl);
+                  }
                 }
-
-                externalMeetRoomMonitoring();
-
-              }else{
-                const redirectUrl = `/morpheus/room/${room.id}`;
-                if (event.ctrlKey) {
-                  window.open(redirectUrl, "_blank");
-                } else {
-                  history.push(redirectUrl);
+              }}
+              onEnterAvatar = {(user) => {
+                window.open("https://hangouts.google.com/chat/person/"+ user.id);
+              }}
+              onEnterDashboard = {() => {
+                if(room.dashboardUrl){
+                  window.open(room.dashboardUrl);
                 }
-              }
-            }}
-            onEnterAvatar = {(user) => {
-              window.open("https://hangouts.google.com/chat/person/"+ user.id);
-            }}
-            onEnterDashboard = {() => {
-              if(room.dashboardUrl){
-                window.open(room.dashboardUrl);
-              }
-            }}
-          />
-        ))}
-      </Grid>
+              }}
+            />
+          ))}
+        </RoomGroup>
+      )) )}
     </div>
   );
 };

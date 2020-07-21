@@ -58,7 +58,7 @@ const RoomCard = ({ name, users, meetingEnabled, dashboardUrl, onEnterRoom, onEn
   return (
     <Card className={classes.root}>
         <CardContent className={classes.content}>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h5" component="h3">
             {name}
           </Typography>
           <div className={classes.userGrid}>
