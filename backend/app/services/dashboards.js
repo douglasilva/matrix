@@ -21,7 +21,7 @@ const fetchFromEnvironment = (env) => new Promise((resolve, reject) => {
 });
 
 const fetchDashboards = () => {
-  return dash = fetchFromEnvironment(process.env);
+  return fetchFromEnvironment(process.env);
 
   // if (dash)
   //   return dash;
