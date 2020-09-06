@@ -2,6 +2,8 @@ export const selectCurrentRoom = state => state.currentRoom;
 
 export const selectRooms = state => state.rooms;
 
+export const selectDashboards = state => state.dashboards;
+
 export const selectCurrentUser = state => state.currentUser;
 
 export const selectOffice = state => state.office;

@@ -9,6 +9,7 @@ import routes from "./app.routes";
 
 import { setupAppAuth } from "./services/auth";
 import fetchRooms from "./services/rooms";
+import fetchDashboards from "./services/dashboards";
 
 import {
   getRoomsSource,
@@ -70,5 +71,17 @@ fetchRooms(getRoomsSource())
   .catch(err => {
     console.error(err);
   });
+
+fetchDashboards()
+  .then(dashboardsData => {
+    console.log("Dashboard");
+    console.log(dashboardsData);
+    app.locals.dashboardsDetail = dashboardsData;
+  })
+  .catch(err => {
+    console.error(err);
+  });
+
+  
 
 module.exports = app;

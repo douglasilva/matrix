@@ -18,6 +18,7 @@ const routes = {
   createRoomPath: "/new",
   removeRoomPath: "/remove",
   listRoomsPath: "/rooms",
+  listDashboardsPath: "/dashboards",
   officePath: id => `/morpheus/office/${id}`,
   roomPath: id => `/morpheus/room/${id}`,
   homePath: "/morpheus/",
@@ -72,6 +73,11 @@ router.get(
 
 router.get(routes.listRoomsPath, authenticate(), (req, res) => {
   res.json(req.app.locals.roomsDetail);
+});
+
+
+router.get(routes.listDashboardsPath, authenticate(), (req, res) => {
+  res.json(req.app.locals.dashboardsDetail);
 });
 
 router.get(

@@ -7,6 +7,13 @@ export const RoomsPropType = PropTypes.arrayOf(
   })
 );
 
+export const DashboardsPropType = PropTypes.arrayOf(
+  PropTypes.shape({
+    title: PropTypes.string,
+    iframe: PropTypes.string
+  })
+);
+
 export const UsersPropType = PropTypes.arrayOf(
   PropTypes.exact({
     id: PropTypes.string.isRequired,

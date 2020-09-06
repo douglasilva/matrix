@@ -15,7 +15,8 @@ import {
   TOGGLE_MESSAGE_DIALOG,
   TOGGLE_THEME,
   OPEN_LOGOUT_CONFIRM_DIALOG,
-  CLOSE_LOGOUT_CONFIRM_DIALOG
+  CLOSE_LOGOUT_CONFIRM_DIALOG,
+  ADD_DASHBOARDS
 } from "./actions";
 import storage from "./storage";
 import { getDefaultTheme, toggleTheme } from "../Themes";
@@ -26,6 +27,7 @@ export const initialState = {
   currentUser: {},
   currentRoom: {},
   rooms: [],
+  dashboards: [],
   usersInRoom: [],
   users: [],
   usersFilter: {
@@ -62,6 +64,7 @@ const buildOfficeState = state => {
   let office = rooms.map(room => ({
     id: room.id,
     name: room.name,
+    description: room.description,
     meetingEnabled: !room.disableMeeting,
     externalMeetUrl: room.externalMeetUrl,
     dashboardUrl: room.dashboardUrl,
@@ -158,6 +161,11 @@ const reducers = (state = initialState, action) => {
         ...state,
         rooms: action.rooms
       });
+    case ADD_DASHBOARDS:
+      return {
+        ...state,
+        dashboards: action.dashboards
+      };
     case CHANGE_OFFICE_FILTER:
       return buildOfficeState({
         ...state,

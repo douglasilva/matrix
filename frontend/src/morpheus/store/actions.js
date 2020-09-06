@@ -2,6 +2,7 @@ export const ADD_ERROR = "ADD_ERROR";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const SET_CURRENT_ROOM = "SET_CURRENT_ROOM";
 export const ADD_ROOMS = "ADD_ROOMS";
+export const ADD_DASHBOARDS = "ADD_DASHBOARDS";
 export const SYNC_OFFICE = "SYNC_OFFICE";
 export const CHANGE_OFFICE_FILTER = "CHANGE_OFFICE_FILTER";
 export const CHANGE_USERS_FILTER = "CHANGE_USERS_FILTER";
@@ -29,6 +30,11 @@ export const setCurrentRoom = room => ({
 export const addRooms = rooms => ({
   type: ADD_ROOMS,
   rooms
+});
+
+export const addDashboards = dashboards => ({
+  type: ADD_DASHBOARDS,
+  dashboards
 });
 
 export const syncOffice = usersInRoom => ({

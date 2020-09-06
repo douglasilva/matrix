@@ -19,6 +19,7 @@ import {
   setCurrentUser,
   setCurrentRoom,
   addRooms,
+  addDashboards,
   syncOffice,
   changeUsersFilter,
   addUser,
@@ -35,11 +36,13 @@ import {
   selectCurrentRoom,
   selectError,
   selectSystemSettings,
-  selectTheme
+  selectTheme,
+  selectDashboards
 } from "./store/selectors";
 import {
   CurrentRoomPropType,
   RoomsPropType,
+  DashboardsPropType,
   CurrentUserPropType,
   SettingsPropType,
   UsersPropType,
@@ -54,6 +57,7 @@ const MorpheusApp = ({
   onSetCurrentUser,
   onSetCurrentRoom,
   onAddRooms,
+  onAddDashboards,
   onSyncOffice,
   onAddUser,
   onAddError,
@@ -64,6 +68,7 @@ const MorpheusApp = ({
   currentRoom,
   settings,
   rooms,
+  dashboards,
   currentUser,
   users,
   usersFilter,
@@ -83,6 +88,7 @@ const MorpheusApp = ({
     onSetCurrentUser,
     onSetCurrentRoom,
     onAddRooms,
+    onAddDashboards,
     onAddError
   );
   useEvents(
@@ -131,6 +137,7 @@ const MorpheusApp = ({
             }}
           />
         )}
+        dashboards= { dashboards }
       >
         {isLoading ? <Loading /> : <PageRoutes />}
       </PageLayout>
@@ -167,6 +174,7 @@ MorpheusApp.propTypes = {
   onSetCurrentUser: PropTypes.func,
   onSetCurrentRoom: PropTypes.func,
   onAddRooms: PropTypes.func,
+  onAddDashboards: PropTypes.func,
   onSyncOffice: PropTypes.func,
   onAddUser: PropTypes.func,
   onAddError: PropTypes.func,
@@ -178,6 +186,7 @@ MorpheusApp.propTypes = {
   }).isRequired,
   currentRoom: CurrentRoomPropType.isRequired,
   rooms: RoomsPropType.isRequired,
+  dashboards: DashboardsPropType.isRequired,
   currentUser: CurrentUserPropType.isRequired,
   users: UsersPropType.isRequired,
   usersFilter: UsersFilterPropType.isRequired,
@@ -190,6 +199,7 @@ MorpheusApp.defaultProps = {
   onSetCurrentUser: () => {},
   onSetCurrentRoom: () => {},
   onAddRooms: () => {},
+  onAddDashboards: () => {},
   onSyncOffice: () => {},
   onAddUser: () => {},
   onAddError: () => {},
@@ -203,6 +213,7 @@ const mapStateToProps = state => ({
   theme: selectTheme(state),
   currentRoom: selectCurrentRoom(state),
   rooms: selectRooms(state),
+  dashboards: selectDashboards(state),
   currentUser: selectCurrentUser(state),
   users: selectUsers(state),
   usersFilter: selectUsersFilter(state),
@@ -215,6 +226,7 @@ const mapDispatchToProps = {
   onSetCurrentUser: setCurrentUser,
   onSetCurrentRoom: setCurrentRoom,
   onAddRooms: addRooms,
+  onAddDashboards: addDashboards,
   onSyncOffice: syncOffice,
   onAddUser: addUser,
   onAddError: addError,

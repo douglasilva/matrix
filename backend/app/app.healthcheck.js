@@ -7,6 +7,7 @@ function onHealthCheck() {
   // we can add the checks here as needed
   return Promise.all(
     [fetchRooms(getRoomsSource())],
+    [fetchDashboards()],
   );
 }
 

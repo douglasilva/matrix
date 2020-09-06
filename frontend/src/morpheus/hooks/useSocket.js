@@ -14,6 +14,7 @@ const useSocket = (
   onSetCurrentUser,
   onSetCurrentRoom,
   onAddRooms,
+  addDashboards,
   onAddError
 ) => {
   useEffect(() => {
@@ -25,6 +26,16 @@ const useSocket = (
     }
 
     onSetCurrentUser(getCurrentUser());
+
+    axios
+    .get("/dashboards")
+    .then(response => {
+      const dashboads = response.data;
+      addDashboards(dashboads);
+    })
+    .catch(error => {
+      onAddError(error);
+    });
 
     axios
       .get("/rooms")
@@ -47,11 +58,14 @@ const useSocket = (
         onAddError(error);
         toggleLoading(false);
       });
+
+
   }, [
     toggleLoading,
     setLoggedIn,
     onSetCurrentUser,
     onAddRooms,
+    addDashboards,
     onAddError,
     onSetCurrentRoom
   ]);
